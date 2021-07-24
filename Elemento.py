@@ -1,8 +1,10 @@
 class Elemento:
-    def __init__(self, dado, proximo) -> None:
-        '''Construtor de um elemento'''
+    def __init__(self, dado, elemento) -> None:
+        '''Construtor de um elemento
+        
+        Recebe um valor para o elemento e outro elemento para qual ele aponta'''
         self.__dado = dado
-        self.__proximo = proximo
+        self.__proximo = elemento
 
     def __repr__(self) -> str:
         '''Representação de um elemento'''
@@ -18,11 +20,13 @@ class Elemento:
         return self.__dado
 
     def getProximoElemento(self) -> any:
-        '''Retorna o elemento seguinte ao atual ou False caso não houver'''
+        '''Retorna o elemento seguinte ao atual 
+        
+        ou False caso não houver'''
         if (self.__proximo == None):
             return False
         return self.__proximo
 
-    def setProximo(self, proximo) -> None:
+    def setProximo(self, elemento) -> None:
         '''Define qual o próximo elemento do atual'''
-        self.__proximo = proximo
+        self.__proximo = elemento

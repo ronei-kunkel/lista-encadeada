@@ -10,11 +10,25 @@ from Elemento import Elemento
 #-------------------------------------------------------#
 
 class Lista:
-    def __init__(self, elemento):
-        '''Construtor de lista'''
-        self.__elemento = elemento
-        self.__head = None
+    def __init__(self, elemento) -> None:
+        '''Construtor de lista
+        
+        Recebe o elemento que encabeça a lista'''
+        self.__primeiro = elemento
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''Representação de lista'''
-        return '['+']'
+        string = '['
+        if (self.getPrimeiro()):
+            string += str(self.getPrimeiro()) + ']'
+            return string.replace(' ➞ ', ', ')
+        else:
+            return string + ']'
+
+    def getPrimeiro(self) -> any:
+        '''Retorna o elemento que encabeça a lista 
+        
+        ou False caso não houver'''
+        if (self.__primeiro == None):
+            return False
+        return self.__primeiro

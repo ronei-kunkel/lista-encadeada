@@ -10,11 +10,10 @@ from Elemento import Elemento
 #-------------------------------------------------------#
 
 class Lista:
-    def __init__(self, elemento) -> None:
-        '''Construtor de lista
-        
-        Recebe o elemento que encabeça a lista'''
-        self.__primeiro = elemento
+    def __init__(self) -> None:
+        '''Construtor de lista'''
+        self.__primeiro = None
+        self.__quantidade = 0
     
     def __repr__(self) -> str:
         '''Representação de lista'''
@@ -32,3 +31,41 @@ class Lista:
         if (self.__primeiro == None):
             return False
         return self.__primeiro
+
+    def insertElementoNaPosicao(self, dado, posicao) -> bool:
+        '''Insere um elemento na posição passada'''
+        elemento = Elemento(dado, None)
+
+        if (posicao == 1):
+            elemento.setProximo(self.getPrimeiro())
+            self.setPrimeiro(elemento)
+            return True
+        if (posicao >= 2):
+            return False
+        
+        if (posicao == self.getQuantidadeElementos(self.getPrimeiro())):
+            pass
+
+    def getQuantidadeElementos(self) -> int:
+
+        self.recursao(self.getPrimeiro())
+
+        return self.__quantidade
+
+    def recursao(self, elemento) -> int:
+        '''Retorna a quantidade de elementos da lista'''
+
+        if (not elemento.getProximoElemento()):
+            self.__quantidade += 1
+            return self.__quantidade
+
+        proximoElemento = elemento.getProximoElemento()
+        self.__quantidade += 1
+        return self.recursao(proximoElemento)
+
+
+
+    #DEDBUGS
+    def setPrimeiro(self, elemento) -> None:
+        '''Insere um elemento na primeira posição'''
+        self.__primeiro = elemento

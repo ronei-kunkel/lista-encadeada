@@ -30,3 +30,4 @@ class Elemento:
     def setProximo(self, elemento) -> None:
         '''Define qual o próximo elemento do atual'''
         self.__proximo = elemento
+

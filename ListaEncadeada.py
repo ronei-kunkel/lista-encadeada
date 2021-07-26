@@ -11,34 +11,35 @@ from Elemento import Elemento
 
 class Lista:
     def __init__(self) -> None:
-        '''Construtor de lista'''
+        '''Construtor de uma lista'''
         self.__primeiro = None
         self.__quantidade = 0
 
     def __repr__(self) -> str:
-        '''Representação de lista'''
+        '''Representação de uma lista'''
         string = '['
-        if (self.getPrimeiro()):
-            return self.recursaoRepresentacao(self.getQuantidadeElementos(), self.getPrimeiro(), string) + ']'
+        if (self.getPrimeiroElemento()):
+            return self.recursaoRepresentacao(self.getQuantidadeElementos(), self.getPrimeiroElemento(), string) + ']'
         else:
             return string + ']'
 
-    def recursaoRepresentacao(self, tamanho, elemento, string):
+    def recursaoRepresentacao(self, tamanho, elemento, string) -> str:
+        '''Recursividade usada para montar a representação de uma lista'''
         if (tamanho == 1):
             string += elemento.getDado()
             return string
-        
+
         tamanho -= 1
         string += elemento.getDado() + ', '
-        proximoElemento = elemento.getProximoElemento()
+        proximoElemento = elemento.getProximo()
         return self.recursaoRepresentacao(tamanho, proximoElemento, string)
 
     def clearLista(self) -> None:
-        '''Limpa a lista'''
-        self.setPrimeiro(None)
+        '''Limpa uma lista'''
+        self.setPrimeiroElemento(None)
         self.setQuantidadeElementos(0)
 
-    def getPrimeiro(self) -> any:
+    def getPrimeiroElemento(self) -> any:
         '''Retorna o primeiro elemento da lista 
 
         ou False caso a lista esteja vazia'''
@@ -46,9 +47,17 @@ class Lista:
             return False
         return self.__primeiro
 
-    def setPrimeiro(self, elemento) -> None:
+    def setPrimeiroElemento(self, elemento) -> None:
         '''Insere um elemento na primeira posição'''
         self.__primeiro = elemento
+
+    def getQuantidadeElementos(self) -> int:
+        '''Retorna a quantidade de elementos da lista'''
+        return self.__quantidade
+
+    def setQuantidadeElementos(self, quantidade) -> None:
+        '''Insere a quantidade de elementos na lista'''
+        self.__quantidade = quantidade
 
     def incrementaQuantidadeElementos(self) -> None:
         '''Incrementa a quantidade de elementos da lista'''
@@ -65,32 +74,25 @@ class Lista:
         elemento = Elemento(dado, None)
 
         if (posicao == 1):
-            elemento.setProximo(self.getPrimeiro())
-            self.setPrimeiro(elemento)
+            elemento.setProximo(self.getPrimeiroElemento())
+            self.setPrimeiroElemento(elemento)
 
         if (posicao > 1 and posicao <= self.getQuantidadeElementos()+1):
-            elementoAnterior = self.getElementoNaPosicao(posicao-1)
-            proximoElemento = self.getElementoNaPosicao(posicao-1).getProximoElemento()
+            posicao -= 1
+            elementoAnterior = self.getElementoNaPosicao(posicao)
+            proximoElemento = self.getElementoNaPosicao(posicao).getProximo()
             elemento.setProximo(proximoElemento)
             elementoAnterior.setProximo(elemento)
 
         self.incrementaQuantidadeElementos()
         return True
 
-    def getQuantidadeElementos(self) -> int:
-        '''Retorna a quantidade de elementos da lista'''
-        return self.__quantidade
-
-    def setQuantidadeElementos(self, quantidade) -> None:
-        '''Insere a quantidade de elementos na lista'''
-        self.__quantidade = quantidade
-
     def recursaoGetElementoNaPosicao(self, posicao, elemento) -> str:
         '''Recursividade usada para encontrar o elemento na posição desejada'''
         if (posicao == 1):
-            return elemento.getProximoElemento()
+            return elemento.getProximo()
 
-        proximoElemento = elemento.getProximoElemento()
+        proximoElemento = elemento.getProximo()
         posicao -= 1
         return self.recursaoGetElementoNaPosicao(posicao, proximoElemento)
 
@@ -102,6 +104,6 @@ class Lista:
             return False
 
         if (posicao == 1):
-            return self.getPrimeiro()
+            return self.getPrimeiroElemento()
 
-        return self.recursaoGetElementoNaPosicao(posicao-1, self.getPrimeiro())
+        return self.recursaoGetElementoNaPosicao(posicao-1, self.getPrimeiroElemento())

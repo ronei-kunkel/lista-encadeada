@@ -9,18 +9,12 @@ class Elemento:
     def __repr__(self) -> str:
         '''Representação de um elemento'''
         return str(self.getDado())
-        # string = ''
-        # if (self.getProximoElemento()):
-        #     string += str(self.getDado()) + ' ➞ ' + str(self.getProximoElemento())
-        #     return string
-        # else:
-        #     return string + str(self.getDado())
 
     def getDado(self) -> object:
         '''Retorna o dado de um elemento'''
         return self.__dado
 
-    def getProximoElemento(self) -> any:
+    def getProximo(self) -> any:
         '''Retorna o elemento seguinte ao atual 
 
         ou False caso não houver'''

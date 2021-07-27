@@ -10,7 +10,7 @@ class Elemento:
         '''Representação de um elemento'''
         return str(self.getDado())
 
-    def getDado(self) -> object:
+    def getDado(self) -> any:
         '''Retorna o dado de um elemento'''
         return self.__dado
 

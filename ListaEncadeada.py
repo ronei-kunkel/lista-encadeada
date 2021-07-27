@@ -1,14 +1,5 @@
 from Elemento import Elemento
 
-#-------------------------------------------------------#
-#   Checklist:                                          #
-#  ok   Inserir na posição | Valor - Posição            #
-#       Remover da posição                              #
-#  ok   Procurar o valor de acordo com a posição        #
-#       Procurar a posição de acordo com o valor        #
-#  ok   Destruir a lista                                #
-#-------------------------------------------------------#
-
 class Lista:
     def __init__(self) -> None:
         '''Construtor de uma lista'''
@@ -26,11 +17,11 @@ class Lista:
     def recursaoRepresentacao(self, tamanho, elemento, string) -> str:
         '''Recursividade usada para montar a representação de uma lista'''
         if (tamanho == 1):
-            string += elemento.getDado()
+            string += str(elemento.getDado())
             return string
 
         tamanho -= 1
-        string += elemento.getDado() + ', '
+        string += str(elemento.getDado()) + ', '
         proximoElemento = elemento.getProximo()
         return self.recursaoRepresentacao(tamanho, proximoElemento, string)
 
@@ -62,6 +53,10 @@ class Lista:
     def incrementaQuantidadeElementos(self) -> None:
         '''Incrementa a quantidade de elementos da lista'''
         self.__quantidade += 1
+    
+    def decrementaQuantidadeElementos(self) -> None:
+        '''Incrementa a quantidade de elementos da lista'''
+        self.__quantidade -= 1
 
     def insertElementoNaPosicao(self, dado, posicao) -> bool:
         '''Insere um elemento na posição desejada
@@ -87,6 +82,25 @@ class Lista:
         self.incrementaQuantidadeElementos()
         return True
 
+    def removeElementoNaPosicao(self, posicao) -> bool:
+        '''Remove um elemento na posição desejada
+
+        Retorna True em caso de sucesso
+        ou False em caso de erro'''
+        if (posicao < 1 or posicao > self.getQuantidadeElementos()):
+            return False
+
+        if (posicao == 1):
+            self.setPrimeiroElemento(self.getPrimeiroElemento().getProximo())
+
+        if (posicao > 1 and posicao <= self.getQuantidadeElementos()):
+            elementoAnterior = self.getElementoNaPosicao(posicao-1)
+            proximoElemento = self.getElementoNaPosicao(posicao).getProximo()
+            elementoAnterior.setProximo(proximoElemento)
+
+        self.decrementaQuantidadeElementos()
+        return True
+
     def recursaoGetElementoNaPosicao(self, posicao, elemento) -> str:
         '''Recursividade usada para encontrar o elemento na posição desejada'''
         if (posicao == 1):
@@ -107,3 +121,24 @@ class Lista:
             return self.getPrimeiroElemento()
 
         return self.recursaoGetElementoNaPosicao(posicao-1, self.getPrimeiroElemento())
+
+    def recursaoGetPosicaoDoElemento(self, elementoDesejado, elemento, posicao, arrayDePosicoes) -> int:
+        '''Recursividade usada para encontrar a posição de um elemento'''
+        if (posicao > self.getQuantidadeElementos()):
+            return arrayDePosicoes
+
+        if (elementoDesejado == elemento.getDado()):
+            arrayDePosicoes.append(posicao)
+
+        proximoElemento = elemento.getProximo()
+        posicao += 1
+        return self.recursaoGetPosicaoDoElemento(elementoDesejado, proximoElemento, posicao, arrayDePosicoes)
+
+    def getPosicaoDoElemento(self, elemento) -> any:
+        '''Retorna um array com a posição do elemento desejado
+
+        ou False caso o elemento não faça parte da lista'''
+        if (self.recursaoGetPosicaoDoElemento(elemento, self.getPrimeiroElemento(), 1, []) == []):
+            return False
+        
+        return self.recursaoGetPosicaoDoElemento(elemento, self.getPrimeiroElemento(), 1, [])

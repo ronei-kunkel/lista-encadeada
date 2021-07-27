@@ -140,5 +140,5 @@ class Lista:
         ou False caso o elemento não faça parte da lista'''
         if (self.recursaoGetPosicaoDoElemento(elemento, self.getPrimeiroElemento(), 1, []) == []):
             return False
-        
+
         return self.recursaoGetPosicaoDoElemento(elemento, self.getPrimeiroElemento(), 1, [])

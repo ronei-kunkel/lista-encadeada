@@ -1,5 +1,7 @@
+.gitignore
 __*
-Teste.*
-teste.*
+*.zip
 teste
 Teste
+teste.*
+Teste.*

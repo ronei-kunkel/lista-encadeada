@@ -80,7 +80,6 @@ while exec:
             continue
 
         selection = ''
-
         while selection not in ['i', 'I', 'c', 'C']:
             if selection != '':
                 menu('Opção inválida!', list_)
@@ -108,7 +107,20 @@ while exec:
             menu('Você não pode remover elementos de uma lista que não possui elementos!', list_)
             continue
 
-        position = int(input(f'Você quer remover o elemento de qual posição?\nPosições disponíveis de 1 até {list_.getNumberOfElements()}: '))
+        number = list_.getNumberOfElements()
+        arrayOfNumberOfElements = []
+
+        while number > 0:
+            arrayOfNumberOfElements.append(int(number))
+            number -= number
+
+        position = '@!?|pop'
+        while position not in arrayOfNumberOfElements:
+            if position != '@!?|pop':
+                menu('Opção inválida!', list_)
+            position = input(f'Você quer remover o elemento de qual posição?\nPosições disponíveis de 1 até {list_.getNumberOfElements()}: ')
+            if position.isnumeric():
+                position = int(position)
 
         if list_.getElement(position):
             element = list_.getElement(position)

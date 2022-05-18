@@ -9,11 +9,11 @@ class List:
 
     def __repr__(self) -> str:
         '''Representação de uma lista'''
-        string = '['
+        string = ''
         if (self.getFirstElement()):
-            return self.representation(self.getNumberOfElements(), self.getFirstElement(), string) + ']'
+            return self.representation(self.getNumberOfElements(), self.getFirstElement(), string)
         else:
-            return string + ']'
+            return string
 
 
     def representation(self, length, element, string) -> str:
@@ -23,7 +23,7 @@ class List:
             return string
 
         length -= 1
-        string += str(element.getElement()) + ', '
+        string += str(element.getElement()) + ' => '
         nextElement = element.getNextElement()
         return self.representation(length, nextElement, string)
 
@@ -35,9 +35,7 @@ class List:
 
 
     def getFirstElement(self) -> any:
-        '''Retorna o primeiro elemento da lista 
-
-        ou False caso a lista esteja vazia'''
+        '''Retorna o primeiro elemento da lista \r\nou False caso a lista esteja vazia'''
         if (self.__firstElement == None):
             return False
         return self.__firstElement
@@ -69,10 +67,7 @@ class List:
 
 
     def insert(self, dataOfElement, position) -> bool:
-        '''Insere um elemento na posição desejada
-
-        Retorna True em caso de sucesso
-        ou False em caso de erro'''
+        '''Insere um elemento na posição desejada\r\nRetorna True em caso de sucesso\r\nou False em caso de erro'''
         if (position < 1 or position > self.getNumberOfElements()+1):
             return False
 
@@ -94,10 +89,7 @@ class List:
 
 
     def remove(self, position) -> bool:
-        '''Remove um elemento na posição desejada
-
-        Retorna True em caso de sucesso
-        ou False em caso de erro'''
+        '''Remove um elemento na posição desejada\r\nRetorna True em caso de sucesso\r\nou False em caso de erro'''
         if (position < 1 or position > self.getNumberOfElements()):
             return False
 
@@ -124,9 +116,7 @@ class List:
 
 
     def getElement(self, position) -> any:
-        '''Retorna o elemento na posição desejada
-
-        ou False caso não haja a posição na lista'''
+        '''Retorna o elemento na posição desejada\r\nou False caso não haja a posição na lista'''
         if (position < 1 or position > self.getNumberOfElements()):
             return False
 
@@ -150,9 +140,7 @@ class List:
 
 
     def getPosition(self, element) -> any:
-        '''Retorna um array com a posição do elemento desejado
-
-        ou False caso o elemento não faça parte da lista'''
+        '''Retorna um array com a posição do elemento desejado\r\nou False caso o elemento não faça parte da lista'''
         if (self.searchPosition(element, self.getFirstElement(), 1, []) == []):
             return False
 

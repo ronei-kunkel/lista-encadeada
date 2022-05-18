@@ -1,0 +1,6 @@
+# ignore:
+__*
+.*
+
+# except:
+!.gitignore

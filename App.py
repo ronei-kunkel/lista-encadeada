@@ -1,4 +1,4 @@
-from ListaEncadeada import Lista
+from List import List
 from os import system, name
 
 def clear():
@@ -7,7 +7,7 @@ def clear():
     else:
         _ = system('clear')
 
-def menu():
+def menu(return_ = None, list_ = None):
     clear()
     print('+------------------------------------------+')
     print('|                  OPÇÕES                  |')
@@ -22,162 +22,148 @@ def menu():
     print('| 8 - Exibir a quantidade de elementos     |')
     print('| 0 - SAIR                                 |')
     print('+------------------------------------------+')
-    print('+-----------------RETORNO------------------+')
+    print('|                  LISTA                   |')
+    print('+------------------------------------------+')
+    if not 'list_' in globals() or list_ == None:
+        print('Sem lista')
+    else:
+        print('Lista vazia' if list_ == [] else list_)
+    if return_:
+        print('+-----------------RETORNO------------------+')
+        print(return_)
+    print('+-------------------AÇÃO-------------------+')
 
 exec = True
-lista = None
 menu()
 
 while exec:
-    opcao = input('Selecione uma opção: ')
+    if not 'list_' in globals() or not 'list_' in locals():
+        list_ = None
 
-    while not opcao.isnumeric():
-        menu()
-        print(f'Opção {opcao} inválida!')
-        opcao = input('Selecione uma opção: ')
+    option = input('Selecione uma opção: ')
+
+    while not option.isnumeric():
+        menu(f'Opção {option} inválida!', list_)
+        option = input('Selecione uma opção: ')
     
-    if opcao.isnumeric():
-        opcao = int(opcao)
+    if option.isnumeric():
+        option = int(option)
 
-    if (opcao < 0 or opcao > 7 ):
-        menu()
-        print(f'Não existe a opção de número {opcao}!')
+    if (option < 0 or option > 8 ):
+        menu(f'Não existe a opção de número {option}!', list_)
 
-    if opcao == 0:
+    if option == 0:
         print('SAINDO...')
         exec = False
     
-    if opcao == 1:
-        if (lista != None):
-            menu()
-            print('Sua lista já existe e não é possível criar mais de uma!\n')
+    if option == 1:
+        if (list_ != None):
+            menu('Sua lista já existe e não é possível criar mais de uma!\n', list_)
             continue
-        menu()
-        lista = Lista()
-        print('Sua lista foi criada!\n')
+        list_ = List()
+        menu('Sua lista foi criada!\n', list_)
 
-    if opcao == 2:
-        if (lista == None):
-            menu()
-            print('Sua lista não existe!\nNão é possível deletar algo que não existe!\n')
+    if option == 2:
+        if (list_ == None):
+            menu('Não é possível deletar uma lista que não existe!\n', list_)
             continue
-        menu()
-        lista.clearLista()
-        lista = None
-        print('Sua lista foi elminada!\n')
-    
-    if opcao == 3:
+        list_.clear()
+        del list_
+        menu('Sua lista foi eliminada!\n', None)
 
-        if (lista == None):
-            menu()
-            print('Você não pode inserir elementos em uma lista que não existe!\n')
-            continue
-        
-        selecao = input('Você deseja inserir um elemento numérico inteiro[I] ou um elemento caractere[C]? [I,C]: ')
-        
-        if (selecao == 'i' or selecao == 'I'):
-            elemento = int(input('\nInsira um elemento numérico inteiro: '))
-        
-        if (selecao == 'c' or selecao == 'C'):
-            elemento = input('\nInsira um elemento caractere: ')
-        
-        posicao = int(input(f'\nEm qual posição você quer inserir o elemento *{elemento}*?\nPosições disponíveis de 1 até {lista.getQuantidadeElementos()+1}: '))
-
-        menu()
-        
-        if (lista.insertElementoNaPosicao(elemento, posicao)):
-            print(f'Elemento {elemento} adicionado na posição {posicao}')
-            print(f'Sua lista:\n{lista}\n')
-            continue
-        print(f'Não foi possível inserir um elemento na posição {posicao}')
-
-    if opcao == 4:
-        if (lista == None):
-            menu()
-            print('Você não pode remover elementos de uma lista que não existe!\n')
-            continue
-        
-        print(f'Sua lista:\n{lista}\n')
-        
-        posicao = int(input(f'Você quer remover o elemento de qual posição?\nPosições disponíveis de 1 até {lista.getQuantidadeElementos()}: '))
-
-        if (lista.getElementoNaPosicao(posicao)):
-            elemento = lista.getElementoNaPosicao(posicao)
-
-        menu()
-
-        if (lista.removeElementoNaPosicao(posicao)):
-            print(f'Elemento *{elemento}* removido com sucesso da posição *{posicao}*')
-            print(f'Sua lista:\n{lista}\n')
+    if option == 3:
+        if (list_ == None):
+            menu('Você não pode inserir elementos em uma lista que não existe!\n', list_)
             continue
 
-        print(f'Não foi possível remover o elemento da posição *{posicao}*')
+        selection = ''
 
-    if opcao == 5:
+        while (selection not in ['i', 'I', 'c', 'C']):
+            if (selection != ''):
+                menu('Opção inválida!\n', list_)
+            selection = input('Você deseja inserir um elemento numérico inteiro(I) ou um elemento caractere(C)? (I,C): ')
 
-        if (lista == None):
-            menu()
-            print('Sua lista está vazia!\nNão há elementos para procurar!\n')
+        if (selection in ['i', 'I']):
+            element = int(input('\nInsira um elemento numérico inteiro: '))
+        
+        if (selection in ['c', 'C']):
+            element = input('\nInsira um elemento caractere: ')
+        
+        position = int(input(f'\nEm qual posição você quer inserir o elemento *{element}*?\nPosições disponíveis de 1 até {list_.getNumberOfElements()+1}: '))
+
+        if (list_.insert(element, position)):
+            menu(f'Elemento {element} adicionado na posição {position}', list_)
+            continue
+        menu(f'Não foi possível inserir um elemento na posição {position}', list_)
+
+    if option == 4:
+        if (list_ == None):
+            menu('Você não pode remover elementos de uma lista que não existe!\n', list_)
             continue
 
+        position = int(input(f'Você quer remover o elemento de qual posição?\nPosições disponíveis de 1 até {list_.getNumberOfElements()}: '))
 
-        print(f'Sua lista:\n{lista}\n')
+        if (list_.getElement(position)):
+            element = list_.getElement(position)
 
-        selecao = input('Você deseja encontrar a posição de um elemento numérico inteiro[I] ou um elemento caractere[C]? [I,C]: ')
+        if (list_.remove(position)):
+            menu(f'Elemento *{element}* removido da posição *{position}*', list_)
+            continue
 
-        if (selecao == 'i' or selecao == 'I'):
-            elemento = int(input('\nInsira um elemento numérico inteiro: '))
+        menu(f'Não foi possível remover o elemento *{element}* da posição *{position}*', list_)
+
+    if option == 5:
+        if (list_ == None):
+            menu('Não há posições em uma lista que não existe!\n', list_)
+            continue
+
+        selection = ''
+
+        while (selection not in ['i', 'I', 'c', 'C']):
+            if (selection != ''):
+                menu('Opção inválida!\n', list_)
+            selection = input('Você deseja encontrar a posição de um elemento numérico inteiro[I] ou um elemento caractere[C]? [I,C]: ')
+
+        if (selection in ['i', 'I']):
+            element = int(input('\nInsira um elemento numérico inteiro: '))
         
-        if (selecao == 'c' or selecao == 'C'):
-            elemento = input('\nInsira um elemento caractere: ')
+        if (selection in ['c', 'C']):
+            element = input('\nInsira um elemento caractere: ')
         
-        if (lista.getPosicaoDoElemento(elemento)):
-            menu()
-            elementos = lista.getPosicaoDoElemento(elemento)
-            string = f'seu elemento *{elemento}* se encontra na(s) posição(ões): '
-            for elemento in elementos:
-                if (elemento == elementos[-1]):
-                    string += str(elemento)
+        if (list_.getPosition(element)):
+            elementos = list_.getPosition(element)
+            return_ = f'seu elemento *{element}* se encontra na(s) posição(ões): '
+            for element in elementos:
+                if (element == elementos[-1]):
+                    return_ += str(element)
                 else:
-                    string += str(elemento) + ' e '
-            print(string)
+                    return_ += str(element) + ' e '
+            menu(return_, list_)
             continue
 
-        menu()
-        print(f'Não foi possível encontrar o elemento *{elemento}*')
+        menu(f'Não foi possível encontrar o elemento *{element}*', list_)
 
-    if opcao == 6:
-        
-        if (lista == None):
-            menu()
-            print('Sua lista está vazia!\nNão há elementos para procurar!\n')
+    if option == 6:
+        if (list_ == None):
+            menu('Não existem elementos para procurar em uma lista que não exite!\n', list_)
             continue
 
-        print(f'Sua lista:\n{lista}\n')
+        position = int(input('Você deseja procurar um elemento em qual posição?'))
 
-        posicao = int(input('Você deseja procurar um elemento em qual posição?'))
+        if not list_.getElement(position):
+            menu(f'Não foi possível encontrar nenhum elemento na posição *{position}*', list_)
+            continue
+        menu(f'O elemento da posição *{position}* é: *{list_.getElement(position)}*', list_)
 
-        if (lista.getElementoNaPosicao(posicao)):
-            menu()
-            print(f'O elemento da posição *{posicao}* é: *{lista.getElementoNaPosicao(posicao)}*')
+    if option == 7:
+        if (list_ == None):
+            menu('Você não pode exibir uma lista que você não criou ainda!\n', list_)
+            continue
+        menu(None, list_)
+
+    if option == 8:
+        if (list_ == None):
+            menu('Lista que não existe não tem tamanho!\n', list_)
             continue
 
-        menu()
-        print(f'Não foi possível encontrar nenhum elemento na posição *{posicao}*')
-
-    if opcao == 7:
-
-        if (lista == None):
-            menu()
-            print('Você não pode exibir uma lista que você não criou ainda!\n')
-        menu()
-        print(f'Sua lista:\n{lista}\n')
-
-    if opcao == 8:
-
-        if (lista == None):
-            menu()
-            print('Lista que não existe não tem tamanho!\n')
-
-        menu()
-        print(f'Quantidade de elementos na lista: {lista.getQuantidadeElementos()}')
+        menu(f'Quantidade de elementos na lista: {list_.getNumberOfElements()}', list_)

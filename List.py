@@ -4,19 +4,19 @@ class List:
     def __init__(self) -> None:
         '''Construtor de uma lista'''
         self.__firstElement = None
-        self.__numberOfElements = 0
+        self.__size = 0
 
 
     def __repr__(self) -> str:
         '''Representação de uma lista'''
         string = ''
-        if (self.getFirstElement()):
-            return self.representation(self.getNumberOfElements(), self.getFirstElement(), string)
+        if (self.__getFirstElement()):
+            return self.__representation(self.size(), self.__getFirstElement(), string)
         else:
             return string
 
 
-    def representation(self, length, element, string) -> str:
+    def __representation(self, length, element, string) -> str:
         '''Recursividade usada para montar a representação de uma lista'''
         if (length == 1):
             string += str(element.getElement())
@@ -30,105 +30,105 @@ class List:
 
     def clear(self) -> None:
         '''Limpa uma lista'''
-        self.setFirstElement(None)
-        self.setNumberOfElements(0)
+        self.__setFirstElement(None)
+        self.__setSize(0)
 
 
-    def getFirstElement(self) -> any:
+    def __getFirstElement(self) -> any:
         '''Retorna o primeiro elemento da lista \r\nou False caso a lista esteja vazia'''
         if (self.__firstElement == None):
             return False
         return self.__firstElement
 
 
-    def setFirstElement(self, element) -> None:
+    def __setFirstElement(self, element) -> None:
         '''Insere um elemento na primeira posição'''
         self.__firstElement = element
 
 
-    def getNumberOfElements(self) -> int:
+    def size(self) -> int:
         '''Retorna a quantidade de elementos da lista'''
-        return self.__numberOfElements
+        return self.__size
 
 
-    def setNumberOfElements(self, quantity) -> None:
+    def __setSize(self, quantity) -> None:
         '''Insere a quantidade de elementos na lista'''
-        self.__numberOfElements = quantity
+        self.__size = quantity
 
 
-    def increaseNumberOfElements(self) -> None:
+    def __increaseSize(self) -> None:
         '''Incrementa a quantidade de elementos da lista'''
-        self.__numberOfElements += 1
+        self.__size += 1
 
 
-    def decreaseNumberOfElements(self) -> None:
+    def __decreaseSize(self) -> None:
         '''Incrementa a quantidade de elementos da lista'''
-        self.__numberOfElements -= 1
+        self.__size -= 1
 
 
     def insert(self, dataOfElement, position) -> bool:
         '''Insere um elemento na posição desejada\r\nRetorna True em caso de sucesso\r\nou False em caso de erro'''
-        if (position < 1 or position > self.getNumberOfElements()+1):
+        if (position < 1 or position > self.size()+1):
             return False
 
         element = Element(dataOfElement, None)
 
         if (position == 1):
-            element.setNextElement(self.getFirstElement())
-            self.setFirstElement(element)
+            element.setNextElement(self.__getFirstElement())
+            self.__setFirstElement(element)
 
-        if (position > 1 and position <= self.getNumberOfElements()+1):
+        if (position > 1 and position <= self.size()+1):
             position -= 1
             previousElement = self.getElement(position)
             nextElement = self.getElement(position).getNextElement()
             element.setNextElement(nextElement)
             previousElement.setNextElement(element)
 
-        self.increaseNumberOfElements()
+        self.__increaseSize()
         return True
 
 
     def remove(self, position) -> bool:
         '''Remove um elemento na posição desejada\r\nRetorna True em caso de sucesso\r\nou False em caso de erro'''
-        if (position < 1 or position > self.getNumberOfElements()):
+        if (position < 1 or position > self.size()):
             return False
 
         if (position == 1):
-            self.setFirstElement(self.getFirstElement().getNextElement())
+            self.__setFirstElement(self.__getFirstElement().getNextElement())
 
-        if (position > 1 and position <= self.getNumberOfElements()):
+        if (position > 1 and position <= self.size()):
             previousElement = self.getElement(position-1)
             nextElement = self.getElement(position).getNextElement()
             previousElement.setNextElement(nextElement)
 
-        self.decreaseNumberOfElements()
+        self.__decreaseSize()
         return True
 
 
-    def searchElement(self, position, element) -> str:
+    def __searchElement(self, position, element) -> str:
         '''Recursividade usada para encontrar o elemento na posição desejada'''
         if (position == 1):
             return element.getNextElement()
 
         proximoElemento = element.getNextElement()
         position -= 1
-        return self.searchElement(position, proximoElemento)
+        return self.__searchElement(position, proximoElemento)
 
 
     def getElement(self, position) -> any:
         '''Retorna o elemento na posição desejada\r\nou False caso não haja a posição na lista'''
-        if (position < 1 or position > self.getNumberOfElements()):
+        if (position < 1 or position > self.size()):
             return False
 
         if (position == 1):
-            return self.getFirstElement()
+            return self.__getFirstElement()
 
-        return self.searchElement(position-1, self.getFirstElement())
+        return self.__searchElement(position-1, self.__getFirstElement())
 
 
-    def searchPosition(self, desiredElement, element, position, positionsFound) -> int:
+    def __searchPosition(self, desiredElement, element, position, positionsFound) -> int:
         '''Recursividade usada para encontrar a posição de um elemento'''
-        if (position > self.getNumberOfElements()):
+        if (position > self.size()):
             return positionsFound
 
         if (desiredElement == element.getElement()):
@@ -136,12 +136,12 @@ class List:
 
         nextElement = element.getNextElement()
         position += 1
-        return self.searchPosition(desiredElement, nextElement, position, positionsFound)
+        return self.__searchPosition(desiredElement, nextElement, position, positionsFound)
 
 
     def getPosition(self, element) -> any:
         '''Retorna um array com a posição do elemento desejado\r\nou False caso o elemento não faça parte da lista'''
-        if (self.searchPosition(element, self.getFirstElement(), 1, []) == []):
+        if (self.__searchPosition(element, self.__getFirstElement(), 1, []) == []):
             return False
 
-        return self.searchPosition(element, self.getFirstElement(), 1, [])
+        return self.__searchPosition(element, self.__getFirstElement(), 1, [])

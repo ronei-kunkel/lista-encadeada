@@ -1,8 +1,6 @@
 class Element:
     def __init__(self, dataOfElement, nextElement) -> None:
-        '''Construtor de um elemento
-
-        Recebe um valor para o elemento e outro elemento para qual ele aponta'''
+        '''Construtor de um elemento \r\nRecebe um valor para o elemento e outro elemento para qual ele aponta'''
         self.__element = dataOfElement
         self.__nextElement = nextElement
 
@@ -15,9 +13,7 @@ class Element:
         return self.__element
 
     def getNextElement(self) -> any:
-        '''Retorna o elemento seguinte ao atual 
-
-        ou False caso não houver'''
+        '''Retorna o elemento seguinte ao atual \r\nou False caso não houver'''
         if (self.__nextElement == None):
             return False
         return self.__nextElement

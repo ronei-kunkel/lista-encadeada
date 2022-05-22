@@ -91,7 +91,7 @@ while exec:
         if selection in ['c', 'C']:
             element = input('\nInsira um elemento caractere: ')
         
-        position = int(input(f'\nEm qual posição você quer inserir o elemento *{element}*?\nPosições disponíveis de 1 até {list_.getNumberOfElements()+1}: '))
+        position = int(input(f'\nEm qual posição você quer inserir o elemento *{element}*?\nPosições disponíveis de 1 até {list_.size()+1}: '))
 
         if list_.insert(element, position):
             menu(f'Elemento {element} adicionado na posição {position}', list_)
@@ -103,11 +103,11 @@ while exec:
             menu('Você não pode remover elementos de uma lista que não existe!', list_)
             continue
 
-        if list_.getNumberOfElements() == 0:
+        if list_.size() == 0:
             menu('Você não pode remover elementos de uma lista que não possui elementos!', list_)
             continue
 
-        number = list_.getNumberOfElements()
+        number = list_.size()
         arrayOfNumberOfElements = []
 
         while number > 0:
@@ -118,7 +118,7 @@ while exec:
         while position not in arrayOfNumberOfElements:
             if position != '@!?|pop':
                 menu('Opção inválida!', list_)
-            position = input(f'Você quer remover o elemento de qual posição?\nPosições disponíveis de 1 até {list_.getNumberOfElements()}: ')
+            position = input(f'Você quer remover o elemento de qual posição?\nPosições disponíveis de 1 até {list_.size()}: ')
             if position.isnumeric():
                 position = int(position)
 
@@ -136,7 +136,7 @@ while exec:
             menu('Não há posições em uma lista que não existe!', list_)
             continue
 
-        if list_.getNumberOfElements() == 0:
+        if list_.size() == 0:
             menu('Não há nenhum elemento para ser encontrado!', list_)
             continue
 
@@ -171,7 +171,7 @@ while exec:
             menu('Não existem elementos para procurar em uma lista que não exite!', list_)
             continue
 
-        if list_.getNumberOfElements() == 0:
+        if list_.size() == 0:
             menu('Não há nenhum elemento para ser encontrado!', list_)
             continue
 
@@ -193,8 +193,8 @@ while exec:
             menu('Lista que não existe não tem tamanho!', list_)
             continue
 
-        if list_.getNumberOfElements() == 0:
+        if list_.size() == 0:
             menu('Não há nenhum elemento na lista!', list_)
             continue
 
-        menu(f'Quantidade de elementos na lista: {list_.getNumberOfElements()}', list_)
+        menu(f'Quantidade de elementos na lista: {list_.size()}', list_)
